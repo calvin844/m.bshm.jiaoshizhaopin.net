@@ -50,9 +50,16 @@
         govItem: {},
         isShowEditBox: false
       })
-      getAreaGov().then(res => {
-        data.govData = res
-      })
+      let timestamp = Date.parse(new Date()) / 1000;
+      if (timestamp - ~~localStorage['areaGovTime'] > 3600) {
+        getAreaGov().then(res => {
+          data.govData = res
+          localStorage['areaGovTime'] = timestamp
+          localStorage['areaGovList'] = JSON.stringify(res)
+        })
+      } else {
+        data.govData = JSON.parse(localStorage['areaGovList'])
+      }
       const editGov = (govItem) => {
         // console.log(govItem)
         data.isShowEditBox = true
@@ -64,10 +71,10 @@
       const setGov = (setData) => {
         setGovData(setData.govItem.id, setData.areaId, setData.govName)
         // console.log(setData)
-        const govItemData = data.govData.find(item=>item.id === setData.govItem.id)
-        govItemData.gov_name =  setData.govName
-        govItemData.area_id =  setData.areaId
-        govItemData.area.region_name =  setData.areaName
+        const govItemData = data.govData.find(item => item.id === setData.govItem.id)
+        govItemData.gov_name = setData.govName
+        govItemData.area_id = setData.areaId
+        govItemData.area.region_name = setData.areaName
         alert('修改成功！')
       }
       provide('editGov', editGov)
