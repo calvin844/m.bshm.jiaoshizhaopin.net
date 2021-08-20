@@ -32,7 +32,8 @@
         click: true,
         tap: true,
         probeType: this.probeType,
-        pullUpLoad: this.pullUpLoad
+        pullUpLoad: this.pullUpLoad,
+        stopPropagation: true
       })
       if (this.probeType > 1) {
         this.scroll.on('scroll', (position) => {

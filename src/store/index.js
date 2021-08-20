@@ -20,10 +20,12 @@ export default createStore({
     setAdminNewsTop(state, payload) {
       const i = state.adminNewsList.find(item => item.id == payload)
       i.top = i.top == 1 ? 0 : 1
+      i.checked = !i.checked
     },
     delAdminNews(state, payload) {
       const i = state.adminNewsList.find(item => item.id == payload)
       i.state = i.state == 1 ? 2 : 1
+      i.checked = !i.checked
     }
   },
   actions: {
